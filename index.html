@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Free online word counter tool. Instantly count words, characters, sentences, paragraphs and calculate reading time. Perfect for writers, students and professionals.">
+    <meta name="keywords"
+        content="word counter, character counter, sentence counter, paragraph counter, reading time, online tool">
+    <meta name="author" content="WordCounter Clone">
+    <title>WordCounter - Free Online Word and Character Counter Tool</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --primary-dark: #3a56d4;
+            --secondary: #7209b7;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --gray: #6c757d;
+            --light-gray: #e9ecef;
+            --success: #2ecc71;
+            --warning: #f39c12;
+            --border-radius: 10px;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4edf5 100%);
+            color: var(--dark);
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            padding: 40px 0 20px;
+            margin-bottom: 30px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+
+        .logo-icon {
+            background: var(--primary);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            box-shadow: var(--shadow);
+        }
+
+        h1 {
+            font-size: 2.8rem;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 10px;
+            font-weight: 800;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: var(--gray);
+            max-width: 700px;
+            margin: 0 auto 30px;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .input-section {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+
+        .text-input {
+            width: 100%;
+            min-height: 400px;
+            padding: 25px;
+            border: none;
+            resize: vertical;
+            font-size: 1.1rem;
+            color: var(--dark);
+            background: white;
+            line-height: 1.7;
+            transition: var(--transition);
+        }
+
+        .text-input:focus {
+            outline: none;
+            background: #fcfdff;
+        }
+
+        .input-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 25px;
+            background: var(--light-gray);
+            border-top: 1px solid #dee2e6;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border-radius: 6px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--gray);
+            color: var(--gray);
+        }
+
+        .btn-outline:hover {
+            background: var(--light-gray);
+        }
+
+        .stats-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 25px 20px;
+            text-align: center;
+            transition: var(--transition);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin: 10px 0;
+            color: var(--primary);
+        }
+
+        .stat-label {
+            color: var(--gray);
+            font-size: 1rem;
+        }
+
+        .stat-icon {
+            font-size: 1.8rem;
+            color: var(--secondary);
+            margin-bottom: 10px;
+        }
+
+        .results-section {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 30px;
+            height: fit-content;
+        }
+
+        .results-section h2 {
+            font-size: 1.8rem;
+            margin-bottom: 25px;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .results-section h2 i {
+            color: var(--primary);
+        }
+
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px 0;
+            border-bottom: 1px solid var(--light-gray);
+        }
+
+        .result-item:last-child {
+            border-bottom: none;
+        }
+
+        .result-label {
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .result-value {
+            font-weight: 700;
+            color: var(--primary);
+            font-size: 1.2rem;
+        }
+
+        .reading-time {
+            margin-top: 25px;
+            padding-top: 25px;
+            border-top: 2px dashed var(--light-gray);
+        }
+
+        .time-value {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--secondary);
+            margin: 10px 0;
+        }
+
+        .time-label {
+            color: var(--gray);
+        }
+
+        .progress-container {
+            margin-top: 25px;
+        }
+
+        .progress-bar {
+            height: 10px;
+            background: var(--light-gray);
+            border-radius: 5px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+
+        .progress {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 5px;
+            transition: width 0.5s ease;
+        }
+
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+
+        .info-section {
+            margin-top: 40px;
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 30px;
+        }
+
+        .info-section h2 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .info-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .info-card {
+            padding: 20px;
+            border-radius: var(--border-radius);
+            background: #f8f9fa;
+        }
+
+        .info-card h3 {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 0 20px;
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, rgba(114, 9, 183, 0.1), rgba(67, 97, 238, 0.1));
+            padding: 2px 5px;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <div class="logo-icon">
+                    <img src="/wordcount.svg" alt="">
+                </div>
+                <h1>WordCounter</h1>
+            </div>
+            <p class="subtitle">Free online tool for counting words, characters, sentences, paragraphs and reading time.
+                Perfect for writers, students, and content creators.</p>
+        </header>
+
+        <div class="main-content">
+            <div class="input-section">
+                <textarea class="text-input" id="text-input" placeholder="Start typing here or paste your text...">WordCounter is a free online tool that helps you count words, characters, sentences, paragraphs, and more in your text. It's incredibly useful for writers, students, bloggers, journalists, and anyone who needs to analyze their text.
+
+This tool provides real-time statistics as you type. You can see how your text breaks down into different elements and get an estimate of reading time. 
+
+WordCounter also helps you understand the structure of your writing. By analyzing sentence and paragraph length, you can improve readability and flow. Whether you're writing an essay, blog post, or social media content, this tool helps you create better content.
+
+Try it now by typing or pasting your text above!</textarea>
+                <div class="input-footer">
+                    <div class="action-buttons">
+                        <button class="btn btn-outline" id="clear-btn">
+                            <i class="fas fa-eraser"></i> Clear
+                        </button>
+                        <button class="btn btn-outline" id="sample-btn">
+                            <i class="fas fa-file-alt"></i> Sample Text
+                        </button>
+                    </div>
+                    <div class="action-buttons">
+                        <button class="btn btn-primary" id="copy-btn">
+                            <i class="fas fa-copy"></i> Copy Text
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="results-section">
+                <h2><i class="fas fa-chart-bar"></i> Text Statistics</h2>
+                <div class="result-item">
+                    <span class="result-label">Words</span>
+                    <span class="result-value" id="word-count">0</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Characters</span>
+                    <span class="result-value" id="char-count">0</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Characters (no spaces)</span>
+                    <span class="result-value" id="char-no-spaces-count">0</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Sentences</span>
+                    <span class="result-value" id="sentence-count">0</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Paragraphs</span>
+                    <span class="result-value" id="paragraph-count">0</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Spaces</span>
+                    <span class="result-value" id="space-count">0</span>
+                </div>
+
+                <div class="reading-time">
+                    <h3>Reading Time</h3>
+                    <div class="time-value" id="reading-time">0 min</div>
+                    <div class="time-label">(based on 200 words per minute)</div>
+                </div>
+
+                <div class="progress-container">
+                    <div class="progress-bar">
+                        <div class="progress" id="progress-bar" style="width: 0%"></div>
+                    </div>
+                    <div class="progress-label">
+                        <span>0 words</span>
+                        <span id="word-target">500 words target</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="stats-section">
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-font"></i>
+                </div>
+                <div class="stat-value" id="stat-words">0</div>
+                <div class="stat-label">Words</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-keyboard"></i>
+                </div>
+                <div class="stat-value" id="stat-chars">0</div>
+                <div class="stat-label">Characters</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-bars"></i>
+                </div>
+                <div class="stat-value" id="stat-sentences">0</div>
+                <div class="stat-label">Sentences</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-paragraph"></i>
+                </div>
+                <div class="stat-value" id="stat-paragraphs">0</div>
+                <div class="stat-label">Paragraphs</div>
+            </div>
+        </div>
+
+        <div class="info-section">
+            <h2><i class="fas fa-info-circle"></i> About WordCounter</h2>
+            <div class="info-content">
+                <div class="info-card">
+                    <h3><i class="fas fa-question-circle"></i> What is WordCounter?</h3>
+                    <p>WordCounter is a free online tool that counts words, characters, sentences, paragraphs, and
+                        calculates reading time. It's a valuable tool for writers, students, journalists, and
+                        professionals who need to analyze their text content.</p>
+                </div>
+                <div class="info-card">
+                    <h3><i class="fas fa-lightbulb"></i> Why use WordCounter?</h3>
+                    <p>Knowing your word count helps you meet requirements for essays, articles, and social media posts.
+                        Character count is essential for platforms with character limits. Sentence and paragraph
+                        analysis helps improve readability and writing structure.</p>
+                </div>
+                <div class="info-card">
+                    <h3><i class="fas fa-book"></i> How it works</h3>
+                    <p>Simply type or paste your text into the input box. WordCounter instantly analyzes your text as
+                        you type, providing real-time statistics. The tool uses advanced algorithms to accurately count
+                        words, characters, sentences, and paragraphs.</p>
+                </div>
+                <div class="info-card">
+                    <h3><i class="fas fa-bullseye"></i> Word Targets</h3>
+                    <p>Set word count goals for your writing projects. The progress bar helps you track your progress
+                        toward common targets like 500 words (typical blog post) or 1000 words (article length). Aim for
+                        the <span class="highlight">sweet spot</span> for your content type.</p>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>© 2023 WordCounter - Free Online Word and Character Counter Tool</p>
+            <p>This is a frontend-only implementation. No data is stored or sent to any server.</p>
+        </footer>
+    </div>
+
+    <script>
+        // DOM Elements
+        const textInput = document.getElementById('text-input');
+        const wordCount = document.getElementById('word-count');
+        const charCount = document.getElementById('char-count');
+        const charNoSpacesCount = document.getElementById('char-no-spaces-count');
+        const sentenceCount = document.getElementById('sentence-count');
+        const paragraphCount = document.getElementById('paragraph-count');
+        const spaceCount = document.getElementById('space-count');
+        const readingTime = document.getElementById('reading-time');
+        const progressBar = document.getElementById('progress-bar');
+        const wordTarget = document.getElementById('word-target');
+        const clearBtn = document.getElementById('clear-btn');
+        const sampleBtn = document.getElementById('sample-btn');
+        const copyBtn = document.getElementById('copy-btn');
+        const statWords = document.getElementById('stat-words');
+        const statChars = document.getElementById('stat-chars');
+        const statSentences = document.getElementById('stat-sentences');
+        const statParagraphs = document.getElementById('stat-paragraphs');
+
+        // Default text for sample button
+        const sampleText = `Welcome to WordCounter! This is a sample text to demonstrate the capabilities of this tool.
+
+As you type or paste your content in the text area, you'll see real-time statistics about your text. This includes word count, character count (with and without spaces), sentence count, paragraph count, and estimated reading time.
+
+WordCounter is especially useful for:
+- Writers and bloggers who need to meet specific word counts
+- Students working on essays with strict requirements
+- Social media managers crafting posts with character limits
+- SEO specialists optimizing content length
+- Anyone who wants to improve their writing efficiency
+
+Try it now by typing your own text or using the sample text provided. You can also clear the text area at any time using the "Clear" button.`;
+
+        // Initialize with default text
+        textInput.value = sampleText;
+        updateCounts();
+
+        // Event Listeners
+        textInput.addEventListener('input', updateCounts);
+        clearBtn.addEventListener('click', clearText);
+        sampleBtn.addEventListener('click', loadSampleText);
+        copyBtn.addEventListener('click', copyText);
+
+        // Update counts function
+        function updateCounts() {
+            const text = textInput.value;
+
+            // Word count (split by spaces and filter out empty strings)
+            const words = text.trim().split(/\s+/).filter(word => word.length > 0);
+            const wordCountValue = words.length;
+
+            // Character count
+            const charCountValue = text.length;
+
+            // Character count without spaces
+            const charNoSpacesValue = text.replace(/\s+/g, '').length;
+
+            // Sentence count (split by ., !, ?)
+            const sentences = text.split(/[.!?]+/).filter(sentence => sentence.trim().length > 0);
+            const sentenceCountValue = sentences.length;
+
+            // Paragraph count (split by new lines)
+            const paragraphs = text.split(/\n+/).filter(paragraph => paragraph.trim().length > 0);
+            const paragraphCountValue = paragraphs.length;
+
+            // Space count
+            const spaceCountValue = (text.match(/\s/g) || []).length;
+
+            // Reading time (200 words per minute)
+            const readingTimeValue = Math.ceil(wordCountValue / 200);
+
+            // Update DOM elements
+            wordCount.textContent = wordCountValue.toLocaleString();
+            charCount.textContent = charCountValue.toLocaleString();
+            charNoSpacesCount.textContent = charNoSpacesValue.toLocaleString();
+            sentenceCount.textContent = sentenceCountValue.toLocaleString();
+            paragraphCount.textContent = paragraphCountValue.toLocaleString();
+            spaceCount.textContent = spaceCountValue.toLocaleString();
+            readingTime.textContent = readingTimeValue === 1 ? '1 min' : `${readingTimeValue} mins`;
+
+            // Update stats cards
+            statWords.textContent = wordCountValue.toLocaleString();
+            statChars.textContent = charCountValue.toLocaleString();
+            statSentences.textContent = sentenceCountValue.toLocaleString();
+            statParagraphs.textContent = paragraphCountValue.toLocaleString();
+
+            // Update progress bar (target: 500 words)
+            const progressPercentage = Math.min(100, (wordCountValue / 500) * 100);
+            progressBar.style.width = `${progressPercentage}%`;
+            wordTarget.textContent = `${Math.min(wordCountValue, 500)}/500 words`;
+        }
+
+        // Clear text function
+        function clearText() {
+            textInput.value = '';
+            updateCounts();
+        }
+
+        // Load sample text function
+        function loadSampleText() {
+            textInput.value = sampleText;
+            updateCounts();
+        }
+
+        // Copy text function
+        function copyText() {
+            textInput.select();
+            document.execCommand('copy');
+
+            // Change button text temporarily
+            const originalText = copyBtn.innerHTML;
+            copyBtn.innerHTML = '<i class="fas fa-check"></i> Copied!';
+
+            setTimeout(() => {
+                copyBtn.innerHTML = originalText;
+            }, 2000);
+        }
+    </script>
+</body>
+
+</html>
